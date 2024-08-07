@@ -407,11 +407,34 @@
         #claimButton:hover {
             background-color: #0069d9; /* Darker blue on hover */
         }
+        img::after {
+            content: "0";
+            position: absolute;
+            top: 50%;
+            left: 50%;
+            transform: translate(-50%, -50%);
+            font-size: 2em;
+            color:  rgb(68, 224, 255);
+        }
+        
+   
     </style>
 </head>
 <body>
     <div id="mapsImage" style="display: none;">
-        <img src="EROR43-vmake.jpg" alt="Карта" style="width: 100%; height: auto;">
+        <div></div>
+            <img src="EROR43-vmake.jpg" alt="Карта" style="width: 100%; height: auto;">
+            <div id="counter" style="font-size: 2em; color: rgb(255, 255, 255); margin-bottom: 15px; position: absolute; top: 11%; left: 50%; transform: translate(-50%, -50%);">0</div>
+        </div>
+        
+   
+   
+     
+
+        
+   
+        
+        
     </div>
     <div class="container" id="content">
         <div class="row" id="homeContent">
@@ -430,6 +453,7 @@
                 <div class="extraction-container">
                     <div class="extraction-item">
                         <h4>extraction </h4>
+                      
 
                     </div>
                     <div class="extraction-item">
@@ -503,13 +527,13 @@
     <div class="row" id="fridgeContent" style="display: none;">
         <div class="col-12 text-center">
             <div class="task" style="margin-bottom: 20px;">
-                <div class="task-title">Boost PINGVI channel</div>
-                <div class="task-count">50 CATS</div>
-                <a href="https://t.me/pingvigang" class="button_1722621636632" target="_blank">
+                <div class="task-title">Invite three friends </div>
+                <div class="task-count">1000 $PINGVI </div>
+                <a href="https://t.me/notcoin" class="button_1722621636632" target="_blank">
                     <span style="color: rgb(68, 224, 255);">выполнить</span>  
                 </a>
+                
             </div>
-            <div id="counter" style="font-size: 2em; color:  rgb(68, 224, 255); margin-bottom: 30px;">0</div> 
             
             <div class="image-container">
                 <img src="vin.png" alt="tuxedo penguin" width="150" height="150" class="img-fluid mx-auto d-block">
@@ -579,7 +603,8 @@
     </style>
     
     <script>
-        
+
+
         
           
       let counter = 0;
@@ -659,18 +684,57 @@
         // Добавляем переменную для хранения количества нажатий на кнопку Claim
         let claimCount = 0;
       
+        // ... (Your existing code) ...
+
+claimButton.addEventListener('click', () => {
+    clearInterval(intervalId);
+    imageElement.classList.remove('active');
+
+    // Reset the timer
+    timer = 0; 
+    timerElement.textContent = timer; 
+    progressBarFill.style.width = '0%'; 
+
+    // Set up the cooldown timer
+    let cooldownSeconds = 2 * 60 * 60; // 2 hours in seconds
+    let cooldownTimer = setInterval(() => {
+        cooldownSeconds--;
+
+        // Update the timer display
+        timerElement.textContent = formatTime(cooldownSeconds); 
+
+        // Check if the timer has reached 0
+        if (cooldownSeconds <= 0) {
+            clearInterval(cooldownTimer);
+            timerElement.textContent = "00:00:00"; // Reset the timer display
+            // Re-enable the button 
+            claimButton.disabled = false;
+        }
+    }, 1000); // Update every second
+
+    // Optional: Disable the button until the cooldown is over
+    claimButton.disabled = true; 
+});
+
+// Function to format seconds into HH:MM:SS
+function formatTime(seconds) {
+    const hours = Math.floor(seconds / 3600);
+    const minutes = Math.floor((seconds % 3600) / 60);
+    const remainingSeconds = seconds % 60;
+    return pad(hours) + ':' + pad(minutes) + ':' + pad(remainingSeconds);
+}
+
+// Helper function to pad single digits with leading zeros
+function pad(number) {
+    return number < 10 ? '0' + number : number;
+}
+
+      
         
-      
-      
-      claimButton.addEventListener('click', () => {
-        clearInterval(intervalId);
-        imageElement.classList.remove('active');
-        counter = 0;
-        timer = 0;
-        counterElement.textContent = counter;
-        timerElement.textContent = timer;
-        progressBarFill.style.width = '0%';
-      });
+
+
+
+
     </script>
     
       
