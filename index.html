@@ -421,13 +421,58 @@
     </style>
 </head>
 <body>
-    <div id="mapsImage" style="display: none;">
+    <div id="mapsImage" style="display: none; position: relative;">
         <div></div>
-            <img src="EROR43-vmake.jpg" alt="Карта" style="width: 100%; height: auto;">
-            <div id="counter" style="font-size: 2em; color: rgb(255, 255, 255); margin-bottom: 15px; position: absolute; top: 11%; left: 50%; transform: translate(-50%, -50%);">0</div>
-        </div>
+        <img src="EROR43-vmake.jpg" alt="Карта" style="width: 100%; height: auto;">
+        <div id="counter" style="font-size: 2em; color: rgb(255, 255, 255); margin-bottom: 15px; position: absolute; top: 12%; left: 50%; transform: translate(-50%, -50%);">0</div>
         
-   
+        <!-- Кнопка "Connect Wallet" и таймер, расположенные внизу экрана -->
+        <div id="connectWalletContainer" style="position: absolute; bottom: 20px; left: 50%; transform: translate(-50%, 0); text-align: center;">
+            <button id="connectWalletButton" style="
+                background-color: #007bff; /* Синий фон */
+                color: white; /* Цвет текста */
+                border: none;
+                border-radius: 5px;
+                padding: 5px 10px; /* Уменьшенные отступы */
+                cursor: pointer;
+                font-family: 'Junegull', sans-serif;
+                font-size: 0.75em; /* Уменьшенный размер шрифта */
+            ">
+                Connect Wallet
+            </button>
+            <div id="timer2" style="font-size: 1.2em; color: rgb(0, 204, 255); margin-top: 5px;"></div>
+        </div>
+    </div>
+    
+    <script>
+        // Таймер на 5 дней (в миллисекундах)
+        const countdownDuration = 5 * 24 * 60 * 60 * 1000;
+        let countdownEnd = Date.now() + countdownDuration;
+    
+        function updateTimer() {
+            const now = Date.now();
+            const timeLeft = countdownEnd - now;
+    
+            if (timeLeft <= 0) {
+                document.getElementById("timer").textContent = "Time's up!";
+                clearInterval(timerInterval);
+                return;
+            }
+    
+            // Рассчитываем дни, часы, минуты и секунды
+            const days = Math.floor(timeLeft / (1000 * 60 * 60 * 24));
+            const hours = Math.floor((timeLeft % (1000 * 60 * 60 * 24)) / (1000 * 60 * 60));
+            const minutes = Math.floor((timeLeft % (1000 * 60 * 60)) / (1000 * 60));
+            const seconds = Math.floor((timeLeft % (1000 * 60)) / 1000);
+    
+            // Обновляем текст на таймере
+            document.getElementById("timer2").textContent = `Time left: ${days}d ${hours}h ${minutes}m ${seconds}s`;
+        }
+    
+        // Запускаем таймер
+        const timerInterval = setInterval(updateTimer, 1000);
+        updateTimer(); // Запускать один раз сразу, чтобы избежать задержки
+    </script>
    
      
 
@@ -471,37 +516,44 @@
                         <div class="task-title">Boost PINGVI channel</div>
                         <div class="task-count">50 CATS</div>
                         <a href="https://t.me/pingvigang" class="button_1722621636632" target="_blank">
-                       <span style="color: rgb(68, 224, 255);"> выполнить </span>  
-                       </a>
-                          </div>
-                       <div class="task">
-                       <div class="task-title">Subscribe to Channel</div>
-                       <div class="task-count">100 $PINGVI</div>
-                       
-                       <a href="https://t.me/pingvigang" class="button_1722621636632" target="_blank">
-                        <span style="color: rgb(68, 224, 255);">нажми сюда чтобы выполнить задание </span>  
-                         </a>
-                   </div>
-                   <div class="task">
-                        <div class="task-title">add it to your nickname "🐧" </div>
-                        <div class="task-count">100 $PINGVI</div>
-                        
-                       <a href="tg://settings" class="button_1722621636632" target="_blank">
-                        <span style="color: rgb(68, 224, 255);">нажми сюда чтобы выполнить  </span>  
-                         </a>
-                   </div>
-                   <div class="task">
-                        <div class="task-title">Other task</div>
-                        <div class="task-count">100 $PINGVI</div>
-                       
-                       <a href="https://t.me/pingvigang" class="button_1722621636632" target="_blank">
-                        <span style="color: rgb(68, 224, 255);">нажми сюда чтобы выполнить задание </span>  
+                           <span class="tasks1" id="boostPingviChannel" style="color: rgb(68, 224, 255); cursor: pointer;">Boost to channel</span>
+                        </a>
                     </a>
                 </div>
-            
+                      <div class="task">
+                       <div class="task-title">Subscribe to Channel</div>
+                      <div class="task-count">100 $PINGVI</div>
+                      <a href="https://t.me/pingvigang" class="button_1722621636632" target="_blank">
+                        <span class="tasks1" id="subscribeChannel" style="color: rgb(68, 224, 255); cursor: pointer;">Subscribe to channel</span>
+                       
+                       
+                        
+                        
+                    
+                    </div>
+                <div class="task">
+                            <div class="task-title">add it to your nickname "🐧"</div>
+                            <div class="task-count">100 $PINGVI</div>
+                            <a href="tg://settings" id="addNickname" class="button_1722621636632">
+                                <span style="color: rgb(68, 224, 255);">нажми сюда чтобы выполнить</span>
+                            </a>
+                    </div>
+                </div>
+                   </div>
+                   <div class="task">
+                    <div class="task-title">FUN😊Улыбка =</div>
+                    <div class="task-count">100 $PINGVI</div>
+                    <a href="https://t.me/pingvigang" id="otherTask" class="button_1722621636632">
+                        <span style="color: rgb(68, 224, 255); cursor: pointer;">Нажми Сюда </span>
+                        
+                    </a>
+                    
+                </div>
+                
+                
 
             </div>
-            <button class="btn btn-secondary">Show more tasks</button>
+            
         </div>
     </div>
     
@@ -533,13 +585,17 @@
                     <span style="color: rgb(68, 224, 255);">выполнить</span>  
                 </a>
                 
+                
             </div>
             
+
             <div class="image-container">
                 <img src="vin.png" alt="tuxedo penguin" width="150" height="150" class="img-fluid mx-auto d-block">
-
+              
+            
             </div>
             <div class="progress-bar">
+                
                 <div class="progress-bar-fill" id="progressBarFill"></div>
 
                 <div id="timer" style="position: absolute; bottom: 62,5px; left: 50%; transform: translateX(-50%); color: rgb(255, 255, 255);">0</div> 
@@ -547,6 +603,7 @@
     
             </div>
             <button id="claimButton" class="btn btn-primary" style="margin-top: 10px;">Claim</button>
+              
         </div>
     
     
@@ -602,208 +659,272 @@
     }
     </style>
     
+         
+      
+    
     <script>
 
 
         
           
-      let counter = 0;
-      let timer = 0; // Start timer at 0 for forward counting
-      let intervalId;
-      let lastClickTime = 0;
-      let cooldownTime = 2 * 60 * 60 * 1000; // 2 hours in milliseconds
-    
-      const imageContainer = document.querySelector('.image-container');
-      const imageElement = document.querySelector('.image-container img'); // Get the image element
-      const counterElement = document.getElementById('counter');
-      const timerElement = document.getElementById('timer');
-      const progressBarFill = document.getElementById('progressBarFill');
-      const claimButton = document.getElementById('claimButton');
-    
-      // Touch events for mobile support
-      imageContainer.addEventListener('touchstart', () => {
-        if (Date.now() - lastClickTime < cooldownTime) {
-          alert('Wait for 2 hours before clicking again!');
-          return;
+        let counter = 0;
+        let timer = 0; // Start timer at 0 for forward counting
+        let intervalId;
+        let lastClickTime = 0;
+        let cooldownTime = 2 * 60 * 60 * 1000; // 2 hours in milliseconds
+
+
+            
+           
+
+        
+            
+        
+        
+           
+        
+        document.addEventListener("DOMContentLoaded", function() {
+
+         // Функция для добавления события нажатия на кнопки
+    function addTaskEvent(buttonId, increment = 150, delay = 0, actionAfter = null) {
+        const button = document.getElementById(buttonId);
+        if (button) { // Проверяем, существует ли кнопка
+            button.addEventListener("click", function(event) {
+                if (!button.classList.contains('completed')) { // Проверка, была ли кнопка нажата ранее
+                    if (actionAfter) {
+                        // Сначала выполняем действие (открываем ссылку), затем задержку
+                        window.open(button.href, '_blank'); // Открываем ссылку
+                        setTimeout(() => {
+                            counter += increment; // Добавляем к счётчику
+                            document.getElementById("counter").textContent = counter; // Обновляем отображаемое значение
+                            
+                            // Общие действия для всех кнопок после выполнения
+                            button.classList.add('completed'); // Меняем класс для блокировки повторного нажатия
+                            button.querySelector('span').textContent = "Задание выполнено!"; // Меняем текст после выполнения
+                            button.style.pointerEvents = 'none'; // Отключаем взаимодействие
+                        }, delay); // Задержка перед добавлением
+                    } else {counter += increment; // Добавляем к счётчику сразу если нет задержки
+                        document.getElementById("counter").textContent = counter; // Обновляем отображаемое значение
+                        button.classList.add('completed'); // Меняем класс для блокировки повторного нажатия
+                        button.querySelector('span').textContent = "Задание выполнено!"; // Меняем текст после выполнения
+                        button.style.pointerEvents = 'none'; // Отключаем взаимодействие
+                        event.preventDefault(); // Отменяем переход по ссылке, если это кнопка с заданием
+                    }
+                } else {
+                    // Если задача уже выполнена, позволяет перейти по ссылке
+                    window.open(button.href, '_blank');
+                }
+            });
+        } else {
+            console.warn(`Button with ID '${buttonId}' not found.`);
         }
-        lastClickTime = Date.now();
-    
-        imageElement.classList.add('active'); // Add the active class for animation and glow
-        intervalId = setInterval(() => {
-          counter += 15;
-          counterElement.textContent = counter;
-          timer++; // Increase timer value
-          timerElement.textContent = timer;
-          progressBarFill.style.width = (timer / 60) * 100 + '%'; // Update progress bar
-          if (timer >= 60) { // Stop at 60 seconds
-            clearInterval(intervalId);
-            alert("Time's up!");
-            imageElement.classList.remove('active'); // Remove the active class on timeout
-          }
-        }, 1000); // 1 second interval
-      });
-    
-      imageContainer.addEventListener('touchend', () => {
-        clearInterval(intervalId);
-        imageElement.classList.remove('active'); // Remove the active class on touch end
-      });
-    
-      // Keep the 'mousedown' event for desktop support
-      imageContainer.addEventListener('mousedown', () => {
-        if (Date.now() - lastClickTime < cooldownTime) {
-          alert('Wait for 2 hours before clicking again!');
-          return;
-        }
-        lastClickTime = Date.now();
-    
-        imageElement.classList.add('active'); // Add the active class for animation and glow
-        intervalId = setInterval(() => {
-          counter += 15;
-          counterElement.textContent = counter;
-          timer++; // Increase timer value
-          timerElement.textContent = timer;
-          progressBarFill.style.width = (timer / 60) * 100 + '%'; // Update progress bar
-          if (timer >= 60) { // Stop at 60 seconds
-            clearInterval(intervalId);
-            alert("Time's up!");
-            imageElement.classList.remove('active'); // Remove the active class on timeout
-          }
-        }, 1000); // 1 second interval
-      });
-    
-      imageContainer.addEventListener('mouseup', () => {
-        clearInterval(intervalId);
-        imageElement.classList.remove('active'); // Remove the active class on mouse up
-      });
-    
-      imageContainer.addEventListener('mouseout', () => {
-        clearInterval(intervalId);
-        imageElement.classList.remove('active'); // Remove the active class on mouse out
-      });
-     
-        // Добавляем переменную для хранения количества нажатий на кнопку Claim
-        let claimCount = 0;
-      
-        // ... (Your existing code) ...
-
-claimButton.addEventListener('click', () => {
-    clearInterval(intervalId);
-    imageElement.classList.remove('active');
-
-    // Reset the timer
-    timer = 0; 
-    timerElement.textContent = timer; 
-    progressBarFill.style.width = '0%'; 
-
-    // Set up the cooldown timer
-    let cooldownSeconds = 2 * 60 * 60; // 2 hours in seconds
-    let cooldownTimer = setInterval(() => {
-        cooldownSeconds--;
-
-        // Update the timer display
-        timerElement.textContent = formatTime(cooldownSeconds); 
-
-        // Check if the timer has reached 0
-        if (cooldownSeconds <= 0) {
-            clearInterval(cooldownTimer);
-            timerElement.textContent = "00:00:00"; // Reset the timer display
-            // Re-enable the button 
-            claimButton.disabled = false;
-        }
-    }, 1000); // Update every second
-
-    // Optional: Disable the button until the cooldown is over
-    claimButton.disabled = true; 
-});
-
-// Function to format seconds into HH:MM:SS
-function formatTime(seconds) {
-    const hours = Math.floor(seconds / 3600);
-    const minutes = Math.floor((seconds % 3600) / 60);
-    const remainingSeconds = seconds % 60;
-    return pad(hours) + ':' + pad(minutes) + ':' + pad(remainingSeconds);
-}
-
-// Helper function to pad single digits with leading zeros
-function pad(number) {
-    return number < 10 ? '0' + number : number;
-}
-
-      
+    }
         
 
+    window.onload = function() {
+        document.getElementById("counter").textContent = counter;
+
+        // Добавление обработчиков для каждой кнопки
+        addTaskEvent("boostPingviChannel");
+        addTaskEvent("subscribeChannel");
+        addTaskEvent("otherTask");
+        addTaskEvent("addNickname", 1000, 30000, true); // Открытие ссылки, добавление +1000 через 30 секунд
+        addTaskEvent("inviteFriends", 10000, 30000, true); // Открытие ссылки, добавление +10000 через 30 секунд
+        };
+    });
 
 
-
-    </script>
-    
+        const imageContainer = document.querySelector('.image-container');
+        const imageElement = document.querySelector('.image-container img'); // Get the image element
+        const counterElement = document.getElementById('counter');
+        const timerElement = document.getElementById('timer');
+        const progressBarFill = document.getElementById('progressBarFill');
+        const claimButton = document.getElementById('claimButton');
       
-    
-    <script>
-        const timerValueElement = document.getElementById('timerValue');
-        const cooldownTimerElement = document.getElementById('cooldownTimer');
+        // Touch events for mobile support
+        imageContainer.addEventListener('touchstart', () => {
+          if (Date.now() - lastClickTime < cooldownTime) {
+            alert('Wait for 2 hours before clicking again!');
+            return;
+          }
+          lastClickTime = Date.now();
+      
+          imageElement.classList.add('active'); // Add the active class for animation and glow
+          intervalId = setInterval(() => {
+            counter += 15;
+            counterElement.textContent = counter;
+            timer++; // Increase timer value
+            timerElement.textContent = timer;
+            progressBarFill.style.width = (timer / 60) * 100 + '%'; // Update progress bar
+            if (timer >= 60) { // Stop at 60 seconds
+              clearInterval(intervalId);
+              alert("Time's up!");
+              imageElement.classList.remove('active'); // Remove the active class on timeout
+            }
+          }, 1000); // 1 second interval
+        });
+      
+        imageContainer.addEventListener('touchend', () => {
+          clearInterval(intervalId);
+          imageElement.classList.remove('active'); // Remove the active class on touch end
+        });
+      
+        // Keep the 'mousedown' event for desktop support
+        imageContainer.addEventListener('mousedown', () => {
+          if (Date.now() - lastClickTime < cooldownTime) {
+            alert('Wait for 2 hours before clicking again!');
+            return;
+          }
+          lastClickTime = Date.now();
+      
+          imageElement.classList.add('active'); // Add the active class for animation and glow
+          intervalId = setInterval(() => {
+            counter += 15;
+            counterElement.textContent = counter;
+            timer++; // Increase timer value
+            timerElement.textContent = timer;
+            progressBarFill.style.width = (timer / 60) * 100 + '%'; // Update progress bar
+            if (timer >= 60) { // Stop at 60 seconds
+              clearInterval(intervalId);
+              alert("Time's up!");
+              imageElement.classList.remove('active'); // Remove the active class on timeout
+            }
+          }, 1000); // 1 second interval
+        });
+      
+        imageContainer.addEventListener('mouseup', () => {
+          clearInterval(intervalId);
+          imageElement.classList.remove('active'); // Remove the active class on mouse up
+        });
+      
+        imageContainer.addEventListener('mouseout', () => {
+          clearInterval(intervalId);
+          imageElement.classList.remove('active'); // Remove the active class on mouse out
+        });
+       
+          // Добавляем переменную для хранения количества нажатий на кнопку Claim
+          let claimCount = 0;
+        
+          // ... (Your existing code) ...
   
-        // Получаем время окончания кулдауна из localStorage
-   const randomFactElement = document.getElementById('randomFact');
-   const facts = [
-       "Существует 18 видов пингвинов, каждый из которых имеет свои особенности.",
-       "Пингвины могут нырять на глубину до 500 метров и оставаться под водой до 20 минут.",
-       "Пингвины живут в колониях, насчитывающих сотни и даже тысячи особей.",
-       "Пингвины общаются друг с другом с помощью различных звуков и движений.",
-       "Пингвины не мёрзнут в холодной воде благодаря толстому слою жира и перьям, образующим водонепроницаемую оболочку.",
-       "Пингвины — социальные птицы и часто образуют пары на всю жизнь.",
-       "Глаза пингвинов устроены таким образом, что они могут видеть под водой и на суше."
-   ];
-
-   function getRandomFact() {
-       const randomIndex = Math.floor(Math.random() * facts.length);
-       randomFactElement.textContent = facts[randomIndex];
-   }
-
-   getRandomFact(); // Вызываем функцию при загрузке страницы
-
- 
-     const fridgeButton = document.getElementById('fridgeButton');
-     const homeButton = document.getElementById('homeButton');
-     const mapsButton = document.getElementById('mapsButton');
-     const homeContent = document.getElementById('homeContent');
-     const catCountContent = document.getElementById('catCountContent');
-     const tasksContent = document.getElementById('tasksContent'); 
-     const fridgeContent = document.getElementById('fridgeContent');
-     const mapsImage = document.getElementById('mapsImage');
- 
-     fridgeButton.addEventListener('click', () => {
-         homeContent.style.display = 'none';
-         catCountContent.style.display = 'none';
-         tasksContent.style.display = 'none';
-         fridgeContent.style.display = 'block'; 
-         mapsImage.style.display = 'none';
-     });
- 
-     homeButton.addEventListener('click', () => {
-         homeContent.style.display = 'block';
-         catCountContent.style.display = 'block';
-         tasksContent.style.display = 'block'; 
-         fridgeContent.style.display = 'none';
-         mapsImage.style.display = 'none';
-     });
- 
-     mapsButton.addEventListener('click', () => {
-         homeContent.style.display = 'none';
-         catCountContent.style.display = 'none';
-         tasksContent.style.display = 'none';
-         fridgeContent.style.display = 'none';
-         mapsImage.style.display = 'block';
-     });
-
-      
-    
+  claimButton.addEventListener('click', () => {
+      clearInterval(intervalId);
+      imageElement.classList.remove('active');
+  
+      // Reset the timer
+      timer = 0; 
+      timerElement.textContent = timer; 
+      progressBarFill.style.width = '0%'; 
+  
+      // Set up the cooldown timer
+      let cooldownSeconds = 2 * 60 * 60; // 2 hours in seconds
+      let cooldownTimer = setInterval(() => {
+          cooldownSeconds--;
+  
+          // Update the timer display
+          timerElement.textContent = formatTime(cooldownSeconds); 
+  
+          // Check if the timer has reached 0
+          if (cooldownSeconds <= 0) {
+              clearInterval(cooldownTimer);
+              timerElement.textContent = "00:00:00"; // Reset the timer display
+              // Re-enable the button 
+              claimButton.disabled = false;
+          }
+      }, 1000); // Update every second
+  
+      // Optional: Disable the button until the cooldown is over
+      claimButton.disabled = true; 
+  });
+  
+  // Function to format seconds into HH:MM:SS
+  function formatTime(seconds) {
+      const hours = Math.floor(seconds / 3600);
+      const minutes = Math.floor((seconds % 3600) / 60);
+      const remainingSeconds = seconds % 60;
+      return pad(hours) + ':' + pad(minutes) + ':' + pad(remainingSeconds);
+  }
+  
+  // Helper function to pad single digits with leading zeros
+  function pad(number) {
+      return number < 10 ? '0' + number : number;
+  }
+  
         
+          
+  
+  
+  
+  
+      </script>
+      
+        
+      
+      <script>
+          const timerValueElement = document.getElementById('timerValue');
+          const cooldownTimerElement = document.getElementById('cooldownTimer');
     
- </script>
- 
- <script src="https://code.jquery.com/jquery-3.5.1.slim.min.js"></script>
- <script src="https://cdn.jsdelivr.net/npm/popper.js@1.16.1/dist/umd/popper.min.js"></script>
- <script src="https://stackpath.bootstrapcdn.com/bootstrap/4.5.2/js/bootstrap.min.js"></script>
- </body>
-</html>
+          // Получаем время окончания кулдауна из localStorage
+     const randomFactElement = document.getElementById('randomFact');
+     const facts = [
+         "Существует 18 видов пингвинов, каждый из которых имеет свои особенности.",
+         "Пингвины могут нырять на глубину до 500 метров и оставаться под водой до 20 минут.",
+         "Пингвины живут в колониях, насчитывающих сотни и даже тысячи особей.",
+         "Пингвины общаются друг с другом с помощью различных звуков и движений.",
+         "Пингвины не мёрзнут в холодной воде благодаря толстому слою жира и перьям, образующим водонепроницаемую оболочку.",
+         "Пингвины — социальные птицы и часто образуют пары на всю жизнь.",
+         "Глаза пингвинов устроены таким образом, что они могут видеть под водой и на суше."
+     ];
+  
+     function getRandomFact() {
+         const randomIndex = Math.floor(Math.random() * facts.length);
+         randomFactElement.textContent = facts[randomIndex];
+     }
+  
+     getRandomFact(); // Вызываем функцию при загрузке страницы
+  
+   
+       const fridgeButton = document.getElementById('fridgeButton');
+       const homeButton = document.getElementById('homeButton');
+       const mapsButton = document.getElementById('mapsButton');
+       const homeContent = document.getElementById('homeContent');
+       const catCountContent = document.getElementById('catCountContent');
+       const tasksContent = document.getElementById('tasksContent'); 
+       const fridgeContent = document.getElementById('fridgeContent');
+       const mapsImage = document.getElementById('mapsImage');
+   
+       fridgeButton.addEventListener('click', () => {
+           homeContent.style.display = 'none';
+           catCountContent.style.display = 'none';
+           tasksContent.style.display = 'none';
+           fridgeContent.style.display = 'block'; 
+           mapsImage.style.display = 'none';
+       });
+   
+       homeButton.addEventListener('click', () => {
+           homeContent.style.display = 'block';
+           catCountContent.style.display = 'block';
+           tasksContent.style.display = 'block'; 
+           fridgeContent.style.display = 'none';
+           mapsImage.style.display = 'none';
+       });
+   
+       mapsButton.addEventListener('click', () => {
+           homeContent.style.display = 'none';
+           catCountContent.style.display = 'none';
+           tasksContent.style.display = 'none';
+           fridgeContent.style.display = 'none';
+           mapsImage.style.display = 'block';
+       });
+  
+        
+      
+          
+      
+   </script>
+   
+   <script src="https://code.jquery.com/jquery-3.5.1.slim.min.js"></script>
+   <script src="https://cdn.jsdelivr.net/npm/popper.js@1.16.1/dist/umd/popper.min.js"></script>
+   <script src="https://stackpath.bootstrapcdn.com/bootstrap/4.5.2/js/bootstrap.min.js"></script>
+   </body>
+  </html>
