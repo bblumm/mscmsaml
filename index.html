@@ -251,7 +251,25 @@
           display: inline-block;
           text-align: center;
       }
-
+       
+    
+      button {
+        background-color: #007bff; /* Blue */
+        border: none;
+        color: white;
+        padding: 10px 20px;
+        text-align: center;
+        text-decoration: none;
+        display: inline-block;
+        font-size: 16px;
+        border-radius: 5px;
+        cursor: pointer;
+        transition: background-color 0.3s;
+      }
+    
+      button:hover {
+        background-color: #0056b3; /* Darker blue */
+      }
       .penguin-container img {
           width: 150px; /* Устанавливаем фиксированную ширину */
           height: auto; /* Сохраняем пропорции */
@@ -338,7 +356,7 @@
           top: 0;
             left: 0;
         }
-
+       
         .timer-progress {
             width: 150px;
             height: 150px;
@@ -416,6 +434,21 @@
             font-size: 2em;
             color:  rgb(68, 224, 255);
         }
+
+        #timer2 {
+            font-size: 1.2em;
+            color: rgb(0, 204, 255);
+            margin-top: 5px;
+            font-family: 'Junegull', sans-serif; /* Используем шрифт Junegull */
+        }
+        
+   
+
+
+
+
+
+
         
    
     </style>
@@ -426,53 +459,78 @@
         <img src="EROR43-vmake.jpg" alt="Карта" style="width: 100%; height: auto;">
         <div id="counter" style="font-size: 2em; color: rgb(255, 255, 255); margin-bottom: 15px; position: absolute; top: 12%; left: 50%; transform: translate(-50%, -50%);">0</div>
         
-        <!-- Кнопка "Connect Wallet" и таймер, расположенные внизу экрана -->
-        <div id="connectWalletContainer" style="position: absolute; bottom: 20px; left: 50%; transform: translate(-50%, 0); text-align: center;">
+        <div id="connectWalletContainer" style="position: absolute; bottom: 10vh; left: 50%; transform: translate(-50%, 0); text-align: center;">
             <button id="connectWalletButton" style="
                 background-color: #007bff; /* Синий фон */
                 color: white; /* Цвет текста */
                 border: none;
                 border-radius: 5px;
-                padding: 5px 10px; /* Уменьшенные отступы */
+                padding: 0.5rem 1rem; /* Уменьшенные отступы */
                 cursor: pointer;
                 font-family: 'Junegull', sans-serif;
-                font-size: 0.75em; /* Уменьшенный размер шрифта */
+                font-size: 0.8em; /* Уменьшенный размер шрифта */
+                transform: scale(1); /* Масштабирование в 1 раз */
+                margin-bottom: 1rem; /* Добавляем отступ снизу */
             ">
-                Connect Wallet
+                Connect Wallet 
             </button>
-            <div id="timer2" style="font-size: 1.2em; color: rgb(0, 204, 255); margin-top: 5px;"></div>
+            
+
+            <script>
+                const connectWalletButton = document.getElementById('connectWalletButton');
+                const countdownDuration = 5 * 24 * 60 * 60 * 1000; // 5 дней в миллисекундах
+                let countdownEnd = Date.now() + countdownDuration;
+            
+                function updateTimer() {
+                    const now = Date.now();
+                    const timeLeft = countdownEnd - now;
+            
+                    if (timeLeft <= 0) {
+                        connectWalletButton.textContent = 'Connect Wallet';
+                        clearInterval(timerInterval);
+                        return;
+                    }
+            
+                    // Рассчитываем дни, часы, минуты и секунды
+                    const days = Math.floor(timeLeft / (1000 * 60 * 60 * 24));
+                    const hours = Math.floor((timeLeft % (1000 * 60 * 60 * 24)) / (1000 * 60 * 60));
+                    const minutes = Math.floor((timeLeft % (1000 * 60 * 60)) / (1000 * 60));
+                    const seconds = Math.floor((timeLeft % (1000 * 60)) / 1000);
+            
+                    // Обновляем текст кнопки
+                    connectWalletButton.textContent = `Connect Wallet (${days}:${hours}:${minutes}:${seconds})`;
+                }
+            
+                // Запускаем таймер
+                const timerInterval = setInterval(updateTimer, 1000);
+                updateTimer(); // Запускать один раз сразу, чтобы избежать задержки
+            </script>
+
+
+
+
+
+
+
+            <div id="timer2" style="font-size: 0.75em; color: rgb(0, 204, 255); margin-top: 0.5rem;"></div> 
         </div>
-    </div>
-    
-    <script>
-        // Таймер на 5 дней (в миллисекундах)
-        const countdownDuration = 5 * 24 * 60 * 60 * 1000;
-        let countdownEnd = Date.now() + countdownDuration;
-    
-        function updateTimer() {
-            const now = Date.now();
-            const timeLeft = countdownEnd - now;
-    
-            if (timeLeft <= 0) {
-                document.getElementById("timer").textContent = "Time's up!";
-                clearInterval(timerInterval);
-                return;
+        
+        <style>
+            @media (max-width: 768px) {
+                #connectWalletContainer {
+                    bottom: 5vh; /* Опускаем блок ниже на мобильных устройствах */
+                }
+                #connectWalletButton {
+                    font-size: 0.6em; /* Уменьшаем размер шрифта */
+                }
+                #timer2 {
+                    font-size: 0.375em; /* Уменьшаем размер шрифта для таймера */
+                }
+                #connectWalletButton {
+                    margin-bottom: 0.5rem; /* Уменьшаем отступ снизу на мобильных */
+                }
             }
-    
-            // Рассчитываем дни, часы, минуты и секунды
-            const days = Math.floor(timeLeft / (1000 * 60 * 60 * 24));
-            const hours = Math.floor((timeLeft % (1000 * 60 * 60 * 24)) / (1000 * 60 * 60));
-            const minutes = Math.floor((timeLeft % (1000 * 60 * 60)) / (1000 * 60));
-            const seconds = Math.floor((timeLeft % (1000 * 60)) / 1000);
-    
-            // Обновляем текст на таймере
-            document.getElementById("timer2").textContent = `Time left: ${days}d ${hours}h ${minutes}m ${seconds}s`;
-        }
-    
-        // Запускаем таймер
-        const timerInterval = setInterval(updateTimer, 1000);
-        updateTimer(); // Запускать один раз сразу, чтобы избежать задержки
-    </script>
+        </style>
    
      
 
@@ -537,9 +595,9 @@
                             <a href="tg://settings" id="addNickname" class="button_1722621636632">
                                 <span style="color: rgb(68, 224, 255);">нажми сюда чтобы выполнить</span>
                             </a>
-                    </div>
+                    
                 </div>
-                   </div>
+                   
                    <div class="task">
                     <div class="task-title">FUN😊Улыбка =</div>
                     <div class="task-count">100 $PINGVI</div>
@@ -553,7 +611,8 @@
                 
 
             </div>
-            
+             <span style="color: rgb(255, 255, 255);"> выполнить выполнить выполнить выполнить выполнить vvvвыполнить vvвыполнить выполнить выполнить  </span>  
+            <button class="btn btn-secondary">Show more tasks</button>
         </div>
     </div>
     
@@ -578,33 +637,78 @@
     </div>
     <div class="row" id="fridgeContent" style="display: none;">
         <div class="col-12 text-center">
-            <div class="task" style="margin-bottom: 20px;">
-                <div class="task-title">Invite three friends </div>
-                <div class="task-count">1000 $PINGVI </div>
-                <a href="https://t.me/notcoin" class="button_1722621636632" target="_blank">
-                    <span style="color: rgb(68, 224, 255);">выполнить</span>  
-                </a>
-                
-                
-            </div>
-            
-
-            <div class="image-container">
-                <img src="vin.png" alt="tuxedo penguin" width="150" height="150" class="img-fluid mx-auto d-block">
-              
-            
-            </div>
-            <div class="progress-bar">
-                
-                <div class="progress-bar-fill" id="progressBarFill"></div>
-
-                <div id="timer" style="position: absolute; bottom: 62,5px; left: 50%; transform: translateX(-50%); color: rgb(255, 255, 255);">0</div> 
-              
-    
-            </div>
-            <button id="claimButton" class="btn btn-primary" style="margin-top: 10px;">Claim</button>
-              
+          <h6>Invite frens and get pingvi</h6>
+          <span style="color: rgb(255, 255, 255);">  выполнить  выполнить выполнить выполнить выполнить выполнить vvvвыполнить vvвыполнить выполнить выполнить выполнить выполнить выполнить vvvвыполнить vvвыполнить выполнить выполнить выполнить выполнить выполнить vvvвыполнить vvвыполнить  vvвыполнить выполнить выполнить выполнить выполнить выполнить vvvвыполнить vvвыполнить выполнить выполнить выполнить выполнить выполнить vvvвыполнить vvвыполнить  выполнить выполнить выполнить выполнить выполнить vvvвыполнить vvвыполнить выполнить выполнить выполнить выполнить выполнить vvvвыполнить vvвыполнить выполнить выполнить выполнить выполнить выполнить vvvвыполнить vvвыполнить         </span> 
+          <p>Tap on the button to invite your friends</p>
         </div>
+      </div>
+     
+      <button id="inviteButtonFridge">Invite frens</button>
+       <style>
+        h6 {
+            font-family: 'Armyrangersexpand';
+            font-size: 3em;
+            color: #00b7ff;
+          }
+          h2 {
+            font-family: 'Armyrangersexpand';
+            font-size: 3em;
+            color: #00b7ff;
+          }
+        
+          
+        
+          /*  Добавьте @font-face для шрифта Junegull, если он не подключен */
+          @font-face {
+            font-family: 'Armyrangersexpand';
+            src: url('Armyrangersexpand.ttf'); /* Путь к файлу шрифта */
+          }
+
+
+
+        #inviteButtonFridge {
+            width: 100%; /* Ширина во весь экран */
+            display: block; /* Кнопка занимает всю строку */
+            padding: 15px; /* Отступы для текста */
+            background-color: #007bff; /* Синий фон */
+            color: white; /* Цвет текста */
+            border: none; /* Убираем границу */
+            border-radius: 20px; /* Скругленные углы */
+            font-family: 'Junegull'; /* Используем шрифт Junegull */
+            font-size: 1.5em; /* Размер шрифта */
+            cursor: pointer; /* Курсор указателя */
+            box-sizing: border-box; /* Включаем отступы в ширину */
+          }
+          
+          /*  Добавьте @font-face для шрифта Junegull, если он не подключен */
+          @font-face {
+            font-family: 'Junegull';
+            src: url('Junegull.ttf'); /* Путь к файлу шрифта */
+          }
+          
+       </style>
+       
+        
+      
+        
+        
+       <script>
+        const inviteButton = document.getElementById('inviteButtonFridge'); // Изменили ID
+        const linkToCopy = 'https://t.me/Pingvigang_bot';
+    
+        inviteButton.addEventListener('click', () => {
+          navigator.clipboard.writeText(linkToCopy)
+            .then(() => {
+              inviteButton.textContent = 'Copied!';
+              setTimeout(() => {
+                inviteButton.textContent = 'Invite frens';
+              }, 1500);
+            })
+            .catch(err => {
+              console.error('Failed to copy: ', err);
+            });
+        });
+      </script>
     
     
   
@@ -657,7 +761,7 @@
       50% { transform: scale(1.1); }
       100% { transform: scale(1); }
     }
-    </style>
+</style>
     
          
       
@@ -683,7 +787,7 @@
         
            
         
-        document.addEventListener("DOMContentLoaded", function() {
+    document.addEventListener("DOMContentLoaded", function() {
 
          // Функция для добавления события нажатия на кнопки
     function addTaskEvent(buttonId, increment = 150, delay = 0, actionAfter = null) {
@@ -698,7 +802,7 @@
                             counter += increment; // Добавляем к счётчику
                             document.getElementById("counter").textContent = counter; // Обновляем отображаемое значение
                             
-                            // Общие действия для всех кнопок после выполнения
+                        // Общие действия для всех кнопок после выполнения
                             button.classList.add('completed'); // Меняем класс для блокировки повторного нажатия
                             button.querySelector('span').textContent = "Задание выполнено!"; // Меняем текст после выполнения
                             button.style.pointerEvents = 'none'; // Отключаем взаимодействие
@@ -864,8 +968,11 @@
           const timerValueElement = document.getElementById('timerValue');
           const cooldownTimerElement = document.getElementById('cooldownTimer');
     
-          // Получаем время окончания кулдауна из localStorage
+          
+
      const randomFactElement = document.getElementById('randomFact');
+     
+
      const facts = [
          "Существует 18 видов пингвинов, каждый из которых имеет свои особенности.",
          "Пингвины могут нырять на глубину до 500 метров и оставаться под водой до 20 минут.",
