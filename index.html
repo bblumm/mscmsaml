@@ -472,47 +472,10 @@
                 transform: scale(1); /* Масштабирование в 1 раз */
                 margin-bottom: 1rem; /* Добавляем отступ снизу */
             ">
-                Connect Wallet 
+                Connect Wallet (UNLOCK 27.08.2024)
             </button>
-            
-
-            <script>
-                const connectWalletButton = document.getElementById('connectWalletButton');
-                const countdownDuration = 5 * 24 * 60 * 60 * 1000; // 5 дней в миллисекундах
-                let countdownEnd = Date.now() + countdownDuration;
-            
-                function updateTimer() {
-                    const now = Date.now();
-                    const timeLeft = countdownEnd - now;
-            
-                    if (timeLeft <= 0) {
-                        connectWalletButton.textContent = 'Connect Wallet';
-                        clearInterval(timerInterval);
-                        return;
-                    }
-            
-                    // Рассчитываем дни, часы, минуты и секунды
-                    const days = Math.floor(timeLeft / (1000 * 60 * 60 * 24));
-                    const hours = Math.floor((timeLeft % (1000 * 60 * 60 * 24)) / (1000 * 60 * 60));
-                    const minutes = Math.floor((timeLeft % (1000 * 60 * 60)) / (1000 * 60));
-                    const seconds = Math.floor((timeLeft % (1000 * 60)) / 1000);
-            
-                    // Обновляем текст кнопки
-                    connectWalletButton.textContent = `Connect Wallet (${days}:${hours}:${minutes}:${seconds})`;
-                }
-            
-                // Запускаем таймер
-                const timerInterval = setInterval(updateTimer, 1000);
-                updateTimer(); // Запускать один раз сразу, чтобы избежать задержки
-            </script>
 
 
-
-
-
-
-
-            <div id="timer2" style="font-size: 0.75em; color: rgb(0, 204, 255); margin-top: 0.5rem;"></div> 
         </div>
         
         <style>
@@ -709,6 +672,10 @@
             });
         });
       </script>
+
+    
+
+    
     
     
   
@@ -787,35 +754,37 @@
         
            
         
-    document.addEventListener("DOMContentLoaded", function() {
+        document.addEventListener("DOMContentLoaded", function() {
+    let counter = parseInt(localStorage.getItem('counter')) || 0;
+    document.getElementById("counter").textContent = counter;
 
-         // Функция для добавления события нажатия на кнопки
     function addTaskEvent(buttonId, increment = 150, delay = 0, actionAfter = null) {
         const button = document.getElementById(buttonId);
-        if (button) { // Проверяем, существует ли кнопка
+        if (button) {
             button.addEventListener("click", function(event) {
-                if (!button.classList.contains('completed')) { // Проверка, была ли кнопка нажата ранее
+                if (!button.classList.contains('completed')) {
                     if (actionAfter) {
-                        // Сначала выполняем действие (открываем ссылку), затем задержку
-                        window.open(button.href, '_blank'); // Открываем ссылку
+                        window.open(button.href, '_blank');
                         setTimeout(() => {
-                            counter += increment; // Добавляем к счётчику
-                            document.getElementById("counter").textContent = counter; // Обновляем отображаемое значение
+                            counter += increment;
+                            localStorage.setItem('counter', counter); // Update counter in localStorage
+                            document.getElementById("counter").textContent = counter;
                             
-                        // Общие действия для всех кнопок после выполнения
-                            button.classList.add('completed'); // Меняем класс для блокировки повторного нажатия
-                            button.querySelector('span').textContent = "Задание выполнено!"; // Меняем текст после выполнения
-                            button.style.pointerEvents = 'none'; // Отключаем взаимодействие
-                        }, delay); // Задержка перед добавлением
-                    } else {counter += increment; // Добавляем к счётчику сразу если нет задержки
-                        document.getElementById("counter").textContent = counter; // Обновляем отображаемое значение
-                        button.classList.add('completed'); // Меняем класс для блокировки повторного нажатия
-                        button.querySelector('span').textContent = "Задание выполнено!"; // Меняем текст после выполнения
-                        button.style.pointerEvents = 'none'; // Отключаем взаимодействие
-                        event.preventDefault(); // Отменяем переход по ссылке, если это кнопка с заданием
+                            button.classList.add('completed');
+                            button.querySelector('span').textContent = "Задание выполнено!";
+                            button.style.pointerEvents = 'none';
+                        }, delay);
+                    } else {
+                        counter += increment;
+                        localStorage.setItem('counter', counter); // Update counter in localStorage
+                        document.getElementById("counter").textContent = counter;
+                        
+                        button.classList.add('completed');
+                        button.querySelector('span').textContent = "Задание выполнено!";
+                        button.style.pointerEvents = 'none';
+                        event.preventDefault();
                     }
                 } else {
-                    // Если задача уже выполнена, позволяет перейти по ссылке
                     window.open(button.href, '_blank');
                 }
             });
@@ -823,19 +792,20 @@
             console.warn(`Button with ID '${buttonId}' not found.`);
         }
     }
-        
 
     window.onload = function() {
         document.getElementById("counter").textContent = counter;
 
-        // Добавление обработчиков для каждой кнопки
         addTaskEvent("boostPingviChannel");
         addTaskEvent("subscribeChannel");
         addTaskEvent("otherTask");
-        addTaskEvent("addNickname", 1000, 30000, true); // Открытие ссылки, добавление +1000 через 30 секунд
-        addTaskEvent("inviteFriends", 10000, 30000, true); // Открытие ссылки, добавление +10000 через 30 секунд
-        };
-    });
+        addTaskEvent("addNickname", 1000, 30000, true);
+        addTaskEvent("inviteFriends", 10000, 30000, true);
+     };
+});
+
+
+
 
 
         const imageContainer = document.querySelector('.image-container');
@@ -1034,4 +1004,4 @@
    <script src="https://cdn.jsdelivr.net/npm/popper.js@1.16.1/dist/umd/popper.min.js"></script>
    <script src="https://stackpath.bootstrapcdn.com/bootstrap/4.5.2/js/bootstrap.min.js"></script>
    </body>
-  </html>
+  </html
