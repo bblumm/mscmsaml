@@ -535,7 +535,7 @@
                 <div class="task-container">
                     <div class="task">
                         <div class="task-title">Boost PINGVI channel</div>
-                        <div class="task-count">50 CATS</div>
+                        <div class="task-count">50 $PINGVI</div>
                         <a href="https://t.me/pingvigang" class="button_1722621636632" target="_blank">
                            <span class="tasks1" id="boostPingviChannel" style="color: rgb(68, 224, 255); cursor: pointer;">Boost to channel</span>
                         </a>
@@ -656,22 +656,37 @@
         
         
        <script>
-        const inviteButton = document.getElementById('inviteButtonFridge'); // Изменили ID
-        const linkToCopy = 'https://t.me/Pingvigang_bot';
+        document.addEventListener('DOMContentLoaded', () => {
+            const inviteButton = document.getElementById('inviteButtonFridge');
+            
+            function generateRandomNumber() {
+                let userRandomNumber = localStorage.getItem('userRandomNumber');
+                if (!userRandomNumber) {
+                    userRandomNumber = Math.floor(Math.random() * 1000);
+                    localStorage.setItem('userRandomNumber', userRandomNumber);
+                }
+                return userRandomNumber;
+            }
     
-        inviteButton.addEventListener('click', () => {
-          navigator.clipboard.writeText(linkToCopy)
-            .then(() => {
-              inviteButton.textContent = 'Copied!';
-              setTimeout(() => {
-                inviteButton.textContent = 'Invite frens';
-              }, 1500);
-            })
-            .catch(err => {
-              console.error('Failed to copy: ', err);
+            inviteButton.addEventListener('click', () => {
+                const randomSuffix = generateRandomNumber();
+                const linkToCopy = `https://t.me/Pingvigang_bot/${randomSuffix}`;
+    
+                navigator.clipboard.writeText(linkToCopy)
+                    .then(() => {
+                        inviteButton.textContent = 'Copied!';
+                        setTimeout(() => {
+                            inviteButton.textContent = 'Invite frens';
+                        }, 1500);
+                    })
+                    .catch(err => {
+                        console.error('Failed to copy: ', err);
+                    });
             });
         });
-      </script>
+    </script>
+    
+    
 
     
 
@@ -756,6 +771,8 @@
         
         document.addEventListener("DOMContentLoaded", function() {
     let counter = parseInt(localStorage.getItem('counter')) || 0;
+    let completedTasks = JSON.parse(localStorage.getItem('completedTasks')) || {};
+
     document.getElementById("counter").textContent = counter;
 
     function addTaskEvent(buttonId, increment = 150, delay = 0, actionAfter = null) {
@@ -763,26 +780,37 @@
         if (button) {
             button.addEventListener("click", function(event) {
                 if (!button.classList.contains('completed')) {
-                    if (actionAfter) {
+                    if (completedTasks[buttonId]) {
+                        // Task has already been completed
                         window.open(button.href, '_blank');
-                        setTimeout(() => {
+                    } else {
+                        if (actionAfter) {
+                            window.open(button.href, '_blank');
+                            setTimeout(() => {
+                                counter += increment;
+                                localStorage.setItem('counter', counter); // Update counter in localStorage
+                                document.getElementById("counter").textContent = counter;
+
+                                button.classList.add('completed');
+                                button.querySelector('span').textContent = "Задание выполнено!";
+                                button.style.pointerEvents = 'none';
+
+                                completedTasks[buttonId] = true;
+                                localStorage.setItem('completedTasks', JSON.stringify(completedTasks));
+                            }, delay);
+                        } else {
                             counter += increment;
                             localStorage.setItem('counter', counter); // Update counter in localStorage
                             document.getElementById("counter").textContent = counter;
-                            
+
                             button.classList.add('completed');
                             button.querySelector('span').textContent = "Задание выполнено!";
                             button.style.pointerEvents = 'none';
-                        }, delay);
-                    } else {
-                        counter += increment;
-                        localStorage.setItem('counter', counter); // Update counter in localStorage
-                        document.getElementById("counter").textContent = counter;
-                        
-                        button.classList.add('completed');
-                        button.querySelector('span').textContent = "Задание выполнено!";
-                        button.style.pointerEvents = 'none';
-                        event.preventDefault();
+
+                            completedTasks[buttonId] = true;
+                            localStorage.setItem('completedTasks', JSON.stringify(completedTasks));
+                            event.preventDefault();
+                        }
                     }
                 } else {
                     window.open(button.href, '_blank');
@@ -801,8 +829,9 @@
         addTaskEvent("otherTask");
         addTaskEvent("addNickname", 1000, 30000, true);
         addTaskEvent("inviteFriends", 10000, 30000, true);
-     };
+    };
 });
+
 
 
 
